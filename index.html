@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CampusEats</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">CampusEats</div>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#menu">Menu / Food Items</a></li>
+    <li><a href="order.html">Cart</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Authentic Food Delivered to Your Campus</h1>
+  <p>Inspired by traditional Bangladeshi flavors</p>
+</section>
+
+<!-- SEARCH & CATEGORY (FIXED & BEAUTIFUL) -->
+<section class="search-wrapper">
+  <input type="text" placeholder="Search for food or restaurant">
+
+  <div class="category-buttons">
+    <button onclick="go('pizza')">Pizza</button>
+    <button onclick="go('burger')">Burger</button>
+    <button onclick="go('biriyani')">Biriyani</button>
+    <button onclick="go('drinks')">Drinks</button>
+    <button onclick="go('dessert')">Dessert</button>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+
+<!-- PIZZA -->
+<section id="pizza" class="category">
+  <h2>Pizza</h2>
+  <div class="food-grid">
+    <div class="food-card">
+      <img src="assets/images/pizza.jpg">
+      <h3>Pepperoni Pizza</h3>
+      <p>Cheesy and spicy delight</p>
+      <div class="price">৳899</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Pepperoni Pizza',899)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Pepperoni Pizza',899)">Buy Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BURGER -->
+<section id="burger" class="category">
+  <h2>Burger</h2>
+  <div class="food-grid">
+    <div class="food-card">
+      <img src="assets/images/burger.jpg">
+      <h3>Chicken Burger</h3>
+      <p>Juicy grilled chicken patty</p>
+      <div class="price">৳599</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Chicken Burger',599)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Chicken Burger',599)">Buy Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIRIYANI -->
+<section id="biriyani" class="category highlight">
+  <h2>Biriyani</h2>
+  <div class="food-grid">
+    <div class="food-card">
+      <img src="assets/images/biriyani.jpg">
+      <h3>Chicken Biriyani</h3>
+      <p>Classic Bangladeshi biriyani</p>
+      <div class="price">৳799</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Chicken Biriyani',799)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Chicken Biriyani',799)">Buy Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DRINKS -->
+<section id="drinks" class="category">
+  <h2>Drinks</h2>
+  <div class="food-grid">
+    <div class="food-card">
+      <img src="assets/images/drinks.jpg">
+      <h3>Soft Drink</h3>
+      <p>Chilled and refreshing</p>
+      <div class="price">৳199</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Soft Drink',199)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Soft Drink',199)">Buy Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESSERT -->
+<section id="dessert" class="category">
+  <h2>Dessert</h2>
+  <div class="food-grid">
+    <div class="food-card">
+      <img src="assets/images/dessert.jpg">
+      <h3>Chocolate Cake</h3>
+      <p>Rich and moist chocolate cake</p>
+      <div class="price">৳449</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Chocolate Cake',449)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Chocolate Cake',449)">Buy Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 CampusEats</p>
+  <p>Inspired by Bangladeshi food culture</p>
+</footer>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function add(name, price){
+  const f = cart.find(i => i.name === name);
+  f ? f.qty++ : cart.push({name, price, qty:1});
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Added to cart");
+}
+
+function buy(name, price){
+  localStorage.setItem("cart", JSON.stringify([{name, price, qty:1}]));
+  location.href="order.html";
+}
+
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+</script>
+
+</body>
+</html>

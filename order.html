@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Details</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">CampusEats</div>
+</nav>
+
+<h2 class="page-title">Order Details</h2>
+
+<div id="items"></div>
+
+<div class="summary">
+  <p>Subtotal: ৳<span id="sub">0</span></p>
+  <p>Delivery Fee: ৳60</p>
+  <p>VAT (5%): ৳<span id="vat">0</span></p>
+  <h3>Total: ৳<span id="total">0</span></h3>
+</div>
+
+<div class="actions">
+  <button onclick="place()">Place Order</button>
+  <button onclick="location.href='index.html'">Back to Home</button>
+</div>
+
+<footer>
+  <p>© 2026 CampusEats</p>
+</footer>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const items = document.getElementById("items");
+
+function render(){
+  let sub = 0;
+  items.innerHTML="";
+  cart.forEach((i,idx)=>{
+    sub += i.price*i.qty;
+    items.innerHTML += `
+      <div class="order-item">
+        ${i.name} — ৳${i.price}
+        <button onclick="chg(${idx},-1)">-</button>
+        ${i.qty}
+        <button onclick="chg(${idx},1)">+</button>
+        <button onclick="del(${idx})">Remove</button>
+      </div>`;
+  });
+  document.getElementById("sub").innerText=sub;
+  const vat=Math.round(sub*0.05);
+  document.getElementById("vat").innerText=vat;
+  document.getElementById("total").innerText=sub+vat+60;
+}
+function chg(i,v){cart[i].qty+=v;if(cart[i].qty<1)cart[i].qty=1;save();}
+function del(i){cart.splice(i,1);save();}
+function save(){localStorage.setItem("cart",JSON.stringify(cart));render();}
+function place(){alert("Order placed successfully");localStorage.clear();location.href='index.html';}
+render();
+</script>
+
+</body>
+</html>
