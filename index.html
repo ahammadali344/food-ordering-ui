@@ -8,44 +8,74 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
+<!-- =====================
+     NAVBAR
+===================== -->
+<nav class="navbar" id="navbar">
   <div class="logo">CampusEats</div>
-  <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#menu">Menu / Food Items</a></li>
-    <li><a href="order.html">Cart</a></li>
+
+  <ul class="nav-links">
+    <li><a href="#" class="active">Home</a></li>
+
+    <li class="dropdown" id="foodDropdown">
+      <a href="javascript:void(0)" id="dropdownToggle">
+        Food Items ▾
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#pizza">Pizza</a></li>
+        <li><a href="#burger">Burger</a></li>
+        <li><a href="#biriyani">Biriyani</a></li>
+        <li><a href="#drinks">Drinks</a></li>
+        <li><a href="#dessert">Dessert</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="order.html">
+        Cart <span class="cart-badge" id="cartCount">0</span>
+      </a>
+    </li>
   </ul>
 </nav>
 
-<!-- HERO -->
+<!-- =====================
+     HERO
+===================== -->
 <section class="hero">
   <h1>Authentic Food Delivered to Your Campus</h1>
   <p>Inspired by traditional Bangladeshi flavors</p>
 </section>
 
-<!-- SEARCH & CATEGORY (FIXED & BEAUTIFUL) -->
+<!-- =====================
+     SEARCH & CATEGORY
+===================== -->
 <section class="search-wrapper">
-  <input type="text" placeholder="Search for food or restaurant">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search for food or restaurant">
 
   <div class="category-buttons">
-    <button onclick="go('pizza')">Pizza</button>
-    <button onclick="go('burger')">Burger</button>
-    <button onclick="go('biriyani')">Biriyani</button>
-    <button onclick="go('drinks')">Drinks</button>
-    <button onclick="go('dessert')">Dessert</button>
+    <button data-target="pizza">Pizza</button>
+    <button data-target="burger">Burger</button>
+    <button data-target="biriyani">Biriyani</button>
+    <button data-target="drinks">Drinks</button>
+    <button data-target="dessert">Dessert</button>
   </div>
 </section>
 
-<!-- MENU -->
+<!-- =====================
+     MENU
+===================== -->
 <section id="menu">
 
 <!-- PIZZA -->
 <section id="pizza" class="category">
   <h2>Pizza</h2>
   <div class="food-grid">
-    <div class="food-card">
-      <img src="assets/images/pizza.jpg">
+
+    <div class="food-card" data-name="Pepperoni Pizza">
+      <img src="assets/images/pepperoni-pizza.jpg" alt="Pizza">
       <h3>Pepperoni Pizza</h3>
       <p>Cheesy and spicy delight</p>
       <div class="price">৳899</div>
@@ -54,6 +84,29 @@
         <button class="buy-btn" onclick="buy('Pepperoni Pizza',899)">Buy Now</button>
       </div>
     </div>
+
+    <div class="food-card" data-name="BBQ Chicken Pizza">
+      <img src="assets/images/Chicken-Pizza.jpg" alt="Pizza">
+      <h3>BBQ Chicken Pizza</h3>
+      <p>Smoky BBQ chicken topping</p>
+      <div class="price">৳949</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('BBQ Chicken Pizza',949)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('BBQ Chicken Pizza',949)">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="food-card" data-name="Veggie Pizza">
+      <img src="assets/images/pizza.jpg" alt="Pizza">
+      <h3>Veggie Pizza</h3>
+      <p>Loaded with fresh vegetables</p>
+      <div class="price">৳799</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Veggie Pizza',799)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Veggie Pizza',799)">Buy Now</button>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -61,8 +114,9 @@
 <section id="burger" class="category">
   <h2>Burger</h2>
   <div class="food-grid">
-    <div class="food-card">
-      <img src="assets/images/burger.jpg">
+
+    <div class="food-card" data-name="Chicken Burger">
+      <img src="assets/images/Chicken-Burger.jpg" alt="Burger">
       <h3>Chicken Burger</h3>
       <p>Juicy grilled chicken patty</p>
       <div class="price">৳599</div>
@@ -71,6 +125,29 @@
         <button class="buy-btn" onclick="buy('Chicken Burger',599)">Buy Now</button>
       </div>
     </div>
+
+    <div class="food-card" data-name="Beef Burger">
+      <img src="assets/images/burger.jpg" alt="Burger">
+      <h3>Beef Burger</h3>
+      <p>Classic beef burger</p>
+      <div class="price">৳699</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Beef Burger',699)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Beef Burger',699)">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="food-card" data-name="Cheese Burger">
+      <img src="assets/images/cheeseburger.jpg" alt="Burger">
+      <h3>Cheese Burger</h3>
+      <p>Loaded with melted cheese</p>
+      <div class="price">৳649</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Cheese Burger',649)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Cheese Burger',649)">Buy Now</button>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -78,8 +155,9 @@
 <section id="biriyani" class="category highlight">
   <h2>Biriyani</h2>
   <div class="food-grid">
-    <div class="food-card">
-      <img src="assets/images/biriyani.jpg">
+
+    <div class="food-card" data-name="Chicken Biriyani">
+      <img src="assets/images/chicken-biryani.jpg" alt="Biriyani">
       <h3>Chicken Biriyani</h3>
       <p>Classic Bangladeshi biriyani</p>
       <div class="price">৳799</div>
@@ -88,6 +166,29 @@
         <button class="buy-btn" onclick="buy('Chicken Biriyani',799)">Buy Now</button>
       </div>
     </div>
+
+    <div class="food-card" data-name="Kacchi Biriyani">
+      <img src="assets/images/biriyani.jpg" alt="Biriyani">
+      <h3>Kacchi Biriyani</h3>
+      <p>Premium kacchi style biriyani</p>
+      <div class="price">৳999</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Kacchi Biriyani',999)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Kacchi Biriyani',999)">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="food-card" data-name="Beef Tehari">
+      <img src="assets/images/Beef_Tehari.jpg" alt="Biriyani">
+      <h3>Beef Tehari</h3>
+      <p>Traditional Dhaka-style tehari</p>
+      <div class="price">৳749</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Beef Tehari',749)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Beef Tehari',749)">Buy Now</button>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -95,8 +196,9 @@
 <section id="drinks" class="category">
   <h2>Drinks</h2>
   <div class="food-grid">
-    <div class="food-card">
-      <img src="assets/images/drinks.jpg">
+
+    <div class="food-card" data-name="Soft Drink">
+      <img src="assets/images/soft-drink.jpg" alt="Drinks">
       <h3>Soft Drink</h3>
       <p>Chilled and refreshing</p>
       <div class="price">৳199</div>
@@ -105,6 +207,29 @@
         <button class="buy-btn" onclick="buy('Soft Drink',199)">Buy Now</button>
       </div>
     </div>
+
+    <div class="food-card" data-name="Lemon Juice">
+      <img src="assets/images/Lemon_Juice.jpg" alt="Drinks">
+      <h3>Lemon Juice</h3>
+      <p>Freshly squeezed lemon</p>
+      <div class="price">৳149</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Lemon Juice',149)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Lemon Juice',149)">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="food-card" data-name="Cold Coffee">
+      <img src="assets/images/cold-coffe.jpg" alt="Drinks">
+      <h3>Cold Coffee</h3>
+      <p>Chilled creamy coffee</p>
+      <div class="price">৳249</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Cold Coffee',249)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Cold Coffee',249)">Buy Now</button>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -112,8 +237,9 @@
 <section id="dessert" class="category">
   <h2>Dessert</h2>
   <div class="food-grid">
-    <div class="food-card">
-      <img src="assets/images/dessert.jpg">
+
+    <div class="food-card" data-name="Chocolate Cake">
+      <img src="assets/images/chocolate-cake.jpg" alt="Dessert">
       <h3>Chocolate Cake</h3>
       <p>Rich and moist chocolate cake</p>
       <div class="price">৳449</div>
@@ -122,36 +248,155 @@
         <button class="buy-btn" onclick="buy('Chocolate Cake',449)">Buy Now</button>
       </div>
     </div>
+
+    <div class="food-card" data-name="Ice Cream">
+      <img src="assets/images/IceCream.jpg" alt="Dessert">
+      <h3>Ice Cream</h3>
+      <p>Vanilla ice cream scoop</p>
+      <div class="price">৳299</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Ice Cream',299)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Ice Cream',299)">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="food-card" data-name="Brownie">
+      <img src="assets/images/Brownies.jpg" alt="Dessert">
+      <h3>Brownie</h3>
+      <p>Chocolate fudge brownie</p>
+      <div class="price">৳349</div>
+      <div class="btn-group">
+        <button class="cart-btn" onclick="add('Brownie',349)">Add to Cart</button>
+        <button class="buy-btn" onclick="buy('Brownie',349)">Buy Now</button>
+      </div>
+    </div>
+
   </div>
 </section>
 
-</section>
+<!-- ADD TO CART MODAL -->
+<div id="cartModal" class="cart-modal">
+  <div class="cart-modal-content">
+    <h3>✅ Added to Cart</h3>
+    <p id="cartModalText"></p>
 
-<!-- FOOTER -->
+    <div class="cart-modal-actions">
+      <button onclick="closeCartModal()">Continue Shopping</button>
+      <button class="go-cart" onclick="location.href='order.html'">
+        Go to Cart
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- =====================
+     FOOTER
+===================== -->
 <footer>
   <p>© 2026 CampusEats</p>
   <p>Inspired by Bangladeshi food culture</p>
 </footer>
-
+<!-- =====================
+     SCRIPT
+===================== -->
 <script>
+/* =====================
+   CART CORE
+===================== */
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-function add(name, price){
+function updateCartCount(){
+  document.getElementById("cartCount").innerText =
+    cart.reduce((sum,i)=>sum+i.qty,0);
+}
+updateCartCount();
+
+/* =====================
+   ADD / BUY (FIXED)
+===================== */
+function add(name, price, image){
   const f = cart.find(i => i.name === name);
-  f ? f.qty++ : cart.push({name, price, qty:1});
+
+  if(f){
+    f.qty++;
+  } else {
+    cart.push({ name, price, image, qty:1 });
+  }
+
   localStorage.setItem("cart", JSON.stringify(cart));
-  alert("Added to cart");
+  updateCartCount();
+  showCartModal(name);
 }
 
-function buy(name, price){
-  localStorage.setItem("cart", JSON.stringify([{name, price, qty:1}]));
-  location.href="order.html";
+function buy(name, price, image){
+  localStorage.setItem("cart", JSON.stringify([
+    { name, price, image, qty:1 }
+  ]));
+  location.href = "order.html";
 }
 
-function go(id){
-  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+/* =====================
+   CART MODAL
+===================== */
+function showCartModal(item){
+  document.getElementById("cartModalText").innerText =
+    item + " has been added to your cart.";
+  document.getElementById("cartModal").classList.add("show");
+
+  setTimeout(closeCartModal, 2500);
 }
+
+function closeCartModal(){
+  document.getElementById("cartModal").classList.remove("show");
+}
+
+/* =====================
+   DROPDOWN (CLICK SAFE)
+===================== */
+const dropdown = document.getElementById("foodDropdown");
+document.getElementById("dropdownToggle").onclick = e=>{
+  e.stopPropagation();
+  dropdown.classList.toggle("open");
+};
+document.addEventListener("click", ()=>dropdown.classList.remove("open"));
+
+/* =====================
+   STICKY NAVBAR
+===================== */
+window.addEventListener("scroll", ()=>{
+  navbar.classList.toggle("scrolled", window.scrollY > 10);
+});
+
+/* =====================
+   CATEGORY ACTIVE
+===================== */
+document.querySelectorAll(".category-buttons button").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".category-buttons button")
+      .forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.target)
+      .scrollIntoView({behavior:"smooth"});
+  };
+});
+
+/* =====================
+   LIVE SEARCH
+===================== */
+searchInput.oninput = e=>{
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll(".food-card").forEach(card=>{
+    card.style.display =
+      card.dataset.name.toLowerCase().includes(q)
+      ? "block" : "none";
+  });
+};
 </script>
+
+
 
 </body>
 </html>

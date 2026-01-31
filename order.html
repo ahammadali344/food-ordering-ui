@@ -1,63 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Order Details</title>
+  <meta charset="UTF-8">
+  <title>Order Details | CampusEats</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar">
   <div class="logo">CampusEats</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#menu">Food Items</a></li>
+    <li><a href="order.html" class="active">Cart</a></li>
+  </ul>
 </nav>
 
-<h2 class="page-title">Order Details</h2>
+<!-- ORDER PAGE -->
+<section class="order-page">
 
-<div id="items"></div>
+  <!-- HEADER -->
+  <div class="order-header">
+    <h1>Order Details</h1>
+    <a href="index.html" class="back-btn">← Continue Shopping</a>
+  </div>
 
-<div class="summary">
-  <p>Subtotal: ৳<span id="sub">0</span></p>
-  <p>Delivery Fee: ৳60</p>
-  <p>VAT (5%): ৳<span id="vat">0</span></p>
-  <h3>Total: ৳<span id="total">0</span></h3>
-</div>
+  <!-- CONTENT -->
+  <div class="order-container">
 
-<div class="actions">
-  <button onclick="place()">Place Order</button>
-  <button onclick="location.href='index.html'">Back to Home</button>
-</div>
+    <!-- LEFT: ITEMS -->
+    <div class="order-items">
+      <h2>Your Items</h2>
+      <div id="cartItems"></div>
+    </div>
 
+    <!-- RIGHT: SUMMARY -->
+    <div class="order-summary">
+      <h2>Price Summary</h2>
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotal">৳0</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Delivery</span>
+        <span id="delivery">৳60</span>
+      </div>
+
+      <div class="summary-row">
+        <span>VAT (5%)</span>
+        <span id="vat">৳0</span>
+      </div>
+
+      <hr>
+
+      <div class="summary-total">
+        <span>Total</span>
+        <span id="total">৳0</span>
+      </div>
+
+      <button class="place-order-btn" onclick="placeOrder()">
+        Place Order
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <p>© 2026 CampusEats</p>
+  <p>Inspired by Bangladeshi food culture</p>
 </footer>
 
+<!-- SCRIPT -->
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-const items = document.getElementById("items");
+const deliveryFee = 60;
+const vatRate = 0.05;
 
-function render(){
-  let sub = 0;
-  items.innerHTML="";
-  cart.forEach((i,idx)=>{
-    sub += i.price*i.qty;
-    items.innerHTML += `
-      <div class="order-item">
-        ${i.name} — ৳${i.price}
-        <button onclick="chg(${idx},-1)">-</button>
-        ${i.qty}
-        <button onclick="chg(${idx},1)">+</button>
-        <button onclick="del(${idx})">Remove</button>
-      </div>`;
+function renderCart(){
+  const cartItemsDiv = document.getElementById("cartItems");
+  cartItemsDiv.innerHTML = "";
+
+  if(cart.length === 0){
+    cartItemsDiv.innerHTML = "<p>Your cart is empty.</p>";
+    updateSummary();
+    return;
+  }
+
+  cart.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "cart-item";
+
+    const itemTotal = item.price * item.qty;
+
+    div.innerHTML = `
+      <div class="item-left">
+        <img src="assets/images/pizza.jpg" alt="${item.name}">
+        <div>
+          <h4>${item.name}</h4>
+          <small>৳${item.price} each</small>
+        </div>
+      </div>
+
+      <div class="item-actions">
+        <button onclick="changeQty(${index}, -1)">−</button>
+        <span>${item.qty}</span>
+        <button onclick="changeQty(${index}, 1)">+</button>
+      </div>
+
+      <div class="item-price">
+        ৳${itemTotal}
+      </div>
+
+      <button class="remove-btn" onclick="removeItem(${index})">✕</button>
+    `;
+
+    cartItemsDiv.appendChild(div);
   });
-  document.getElementById("sub").innerText=sub;
-  const vat=Math.round(sub*0.05);
-  document.getElementById("vat").innerText=vat;
-  document.getElementById("total").innerText=sub+vat+60;
+
+  updateSummary();
 }
-function chg(i,v){cart[i].qty+=v;if(cart[i].qty<1)cart[i].qty=1;save();}
-function del(i){cart.splice(i,1);save();}
-function save(){localStorage.setItem("cart",JSON.stringify(cart));render();}
-function place(){alert("Order placed successfully");localStorage.clear();location.href='index.html';}
-render();
+
+function changeQty(index, change){
+  cart[index].qty += change;
+  if(cart[index].qty <= 0){
+    cart.splice(index, 1);
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+function removeItem(index){
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+function updateSummary(){
+  let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  let vat = Math.round(subtotal * vatRate);
+  let total = subtotal + vat + (cart.length ? deliveryFee : 0);
+
+  document.getElementById("subtotal").innerText = "৳" + subtotal;
+  document.getElementById("vat").innerText = "৳" + vat;
+  document.getElementById("total").innerText = "৳" + total;
+}
+
+function placeOrder(){
+  if(cart.length === 0){
+    alert("Your cart is empty!");
+    return;
+  }
+
+  alert("🎉 Order placed successfully!");
+  localStorage.removeItem("cart");
+  location.href = "index.html";
+}
+
+renderCart();
 </script>
 
 </body>
